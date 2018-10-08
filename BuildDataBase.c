@@ -14,13 +14,13 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include "readInCSV.h"
 #include "readline.h"
-
 int main(int argc, char const *argv[])
 {
     int CSV;
     
-    
+    char* linebuffer = (char*)malloc(LINE_LENGTH);
 
     if((CSV = open("SongCSV.csv",O_RDONLY))<3){
         fprintf(stderr,"error %i: %s\n", errno, strerror(errno));
@@ -31,6 +31,11 @@ int main(int argc, char const *argv[])
     }
     lseek(CSV,(off_t)0,SEEK_SET);
 
-    song* songs = readInCSV("SongCSV.csv");
+    song* songs = readInCSV(CSV,lineCount);
+
+    close(CSV);
+    FILE * binarySongData = fopen("BinarySongData","w+");
+
+    fwrite(songs,sizeof(song),lineCount,binarySongData);
     return 0;
 }

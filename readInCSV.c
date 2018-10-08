@@ -12,9 +12,10 @@
 #include "csvLineRead.h"
 #include "readInCSV.h"
 
-song * readInCSV(int CSV, int lineCount){
-    char* linebuffer = (char*)malloc(LINE_LENGTH);
 
+song *readInCSV(int CSV, int lineCount){
+
+    char* linebuffer = (char*)malloc(LINE_LENGTH);
     song* songs = (song*)malloc(sizeof(song)*lineCount);
     readLine(linebuffer,CSV);
     int inc = 0;
@@ -26,5 +27,5 @@ song * readInCSV(int CSV, int lineCount){
         free(tmp);
         inc++;
     }
-    return &songs;
+    return songs;
 }
