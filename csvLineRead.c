@@ -8,7 +8,7 @@ song *csvLineSpliter(char *toSplit){
     song *returnSong = (song*)malloc(sizeof(song));
     for(int i = 0; i<19; i++){
         
-        while(toSplit[current]!=',' & toSplit[current]!='\0'){
+        while((toSplit[current]!=',') & (toSplit[current]!='\0')){
             current ++;
         }
         

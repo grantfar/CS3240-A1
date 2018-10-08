@@ -1,3 +1,4 @@
 BinarySongData
 BuildDataBase
 .vscode/*
+*.o

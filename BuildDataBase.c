@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "readInCSV.h"
-#include "readline.h"
+#include "readLine.h"
 int main(int argc, char const *argv[])
 {
     int CSV;

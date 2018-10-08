@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-#include "readline.h"
+#include "readLine.h"
 #include "csvLineRead.h"
 #include "readInCSV.h"
 

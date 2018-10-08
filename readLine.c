@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "config.h"
-#include "readline.h"
+#include "readLine.h"
 
 int readLine(char* buffer, int FD){
     memset(buffer, 0 , LINE_LENGTH);
@@ -49,4 +49,5 @@ int readLine(char* buffer, int FD){
             }
         }
     }
+    return -1;
 }
