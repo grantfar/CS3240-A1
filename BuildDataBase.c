@@ -16,6 +16,7 @@
 #include <errno.h>
 #include "readInCSV.h"
 #include "readLine.h"
+#include "sort.h"
 int main(int argc, char const *argv[])
 {
     int CSV;
@@ -30,12 +31,24 @@ int main(int argc, char const *argv[])
         lineCount++;
     }
     lseek(CSV,(off_t)0,SEEK_SET);
-
-    song* songs = readInCSV(CSV,lineCount);
+    song* songs = (song*)malloc(sizeof(song)*lineCount);
+    songOffset* offsets = (songOffset*)malloc(sizeof(songOffset)*lineCount);
+    readInCSV(CSV,songs,offsets,lineCount);
 
     close(CSV);
-    FILE * binarySongData = fopen("BinarySongData","w+");
 
-    fwrite(songs,sizeof(song),lineCount,binarySongData);
+    sort(songs,offsets,lineCount);
+    FILE * binarySongData = fopen("BinarySongData","w+");
+    FILE * offsetData = fopen("offsetData","w+");
+    fwrite(&lineCount,sizeof(int),1,offsetData);
+    fclose(offsetData);
+    fwrite(offsets,sizeof(songOffset),lineCount,offsetData);
+    for(int i = 0; i<lineCount; i++){
+        fwrite(songs+i,sizeof(song),1,binarySongData);
+        fwrite(songs[i].Artist,offsets[i].ArtistLength,1,binarySongData);
+        fwrite(songs[i].Album,offsets[i].AlbumLength,1,binarySongData);
+        fwrite(songs[i].Name,offsets[i].NameLength,1,binarySongData);
+    }
+    fclose(binarySongData);
     return 0;
 }

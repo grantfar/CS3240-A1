@@ -1,4 +1,7 @@
 BinarySongData
 BuildDataBase
+UseDataBase
+offsetData
 .vscode/*
 *.o
+.~lock*

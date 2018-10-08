@@ -9,4 +9,10 @@ typedef struct{
     double Hotness;
 } song;
 
+typedef struct{
+    char *songNameAddress;
+    int NameLength;
+    int AlbumLength;
+    int ArtistLength;
+} songOffset;
 #endif

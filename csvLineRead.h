@@ -1,4 +1,5 @@
 #ifndef CSV_LINE_SPLITER
 #define CSV_LINE_SPLITER
-song *csvLineSpliter(char *toSplit);
+#include "song.h"
+int csvLineSpliter(char *toSplit, song* songs, songOffset* offsets, int position);
 #endif

@@ -13,19 +13,15 @@
 #include "readInCSV.h"
 
 
-song *readInCSV(int CSV, int lineCount){
+int readInCSV(int CSV, song* songs, songOffset* offsets, int lineCount){
 
     char* linebuffer = (char*)malloc(LINE_LENGTH);
-    song* songs = (song*)malloc(sizeof(song)*lineCount);
     readLine(linebuffer,CSV);
     int inc = 0;
-    song *tmp;
     
     while(readLine(linebuffer,CSV)>0){
-        tmp = csvLineSpliter(linebuffer);
-        memcpy(&songs[inc],tmp,sizeof(song));
-        free(tmp);
+        csvLineSpliter(linebuffer,songs,offsets,inc);
         inc++;
     }
-    return songs;
+    return 0;
 }

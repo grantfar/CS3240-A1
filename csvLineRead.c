@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include "song.h"
 #include "csvLineRead.h"
-song *csvLineSpliter(char *toSplit){
+int csvLineSpliter(char *toSplit, song* songs, songOffset* offsets, int position){
     int Start = 0;
     int current = 0;
     char *tmp;
-    song *returnSong = (song*)malloc(sizeof(song));
+    song tmpSong;
+    songOffset tmpOffset;
     for(int i = 0; i<19; i++){
         
         while((toSplit[current]!=',') & (toSplit[current]!='\0')){
@@ -18,7 +19,8 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Album = tmp;
+            tmpSong.Album = tmp;
+            tmpOffset.AlbumLength = current - Start + 1;
         }
 
         if(i == 8){
@@ -27,7 +29,8 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Artist = tmp;
+            tmpSong.Artist = tmp;
+            tmpOffset.ArtistLength = current - Start + 1;
         }
 
         if(i == 10){
@@ -36,7 +39,7 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Durration = atof(tmp);
+            tmpSong.Durration = atof(tmp);
             free(tmp);
         }
 
@@ -46,7 +49,7 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Hotness = atof(tmp);
+            tmpSong.Hotness = atof(tmp);
             free(tmp);
         }
 
@@ -56,7 +59,9 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Name = tmp;
+            tmpSong.Name = tmp;
+            tmpOffset.NameLength = current - Start + 1;
+            tmpOffset.songNameAddress = tmp;
         }
 
         if(i==18){
@@ -65,12 +70,14 @@ song *csvLineSpliter(char *toSplit){
             for(int i = Start; i < current; i++){
                 tmp[i-Start] = toSplit[i];
             }
-            returnSong->Year = atoi(tmp);
+            tmpSong.Year = atoi(tmp);
             free(tmp);
         }
         current+=1;
         Start = current;
     }
     tmp = NULL;
-    return returnSong;
+    offsets[position] = tmpOffset;
+    songs[position] = tmpSong;
+    return 0;
 }
